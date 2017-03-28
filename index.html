@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>拖拽事件</title>
+    <style type="text/css">
+        #div{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+            left: 0;
+            top: 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="div"></div>
+</body>
+<script type="text/javascript">
+    // 获取元素
+    var div = document.getElementById("div");
+                    // 浏览器窗口的高度-div的高度
+    var winHeight = document.documentElement.clientHeight-div.clientHeight||document.body.clientHeight-div.clientHeight;
+    var winWidth = document.documentElement.clientWidth-div.clientWidth||document.body.clientWidth-div.clientWidth;
+
+    // 鼠标左键点击
+div.onclick=function(){
+    // 兼容IE
+    var e = e||window.event;
+    console.log(event);
+}
+
+// 鼠标点击没有释放的时候
+div.onmousedown=function(e){
+
+    // 鼠标的位置
+    var divL = e.clientX-div.offsetLeft;
+    var divT = e.clientY-div.offsetTop;
+    document.onmousemove=function(e){
+
+        div.style.left=e.clientX-divL+"px";
+        div.style.top=e.clientY-divT+"px";
+
+        if(div.offsetLeft<=0){
+            div.style.left = 0+"px";
+        }
+        if(div.offsetLeft>=winWidth){
+            div.style.left=winWidth+"px";
+        }
+        if(div.offsetTop<=0){
+            div.style.top=0+"px";
+        }
+        if(div.offsetTop>=winHeight){
+            div.style.top=winHeight+"px";
+        }
+    }
+}
+// 鼠标释放的时候
+div.onmouseup=function(e){
+    // 鼠标释放的时候把其变成空
+    document.onmousemove=null;
+}
+
+
+</script>
+</html>
